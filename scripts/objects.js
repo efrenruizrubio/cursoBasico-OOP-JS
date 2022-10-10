@@ -1,3 +1,18 @@
+class Comment {
+  constructor({ content, studentName, studentRole = "estudiante" }) {
+    this.content = content;
+    this.studentName = studentName;
+    this.studentRole = studentRole;
+    this.likes = 0;
+  }
+
+  publicar() {
+    console.log(this.studentName + " (" + this.studentRole + "):");
+    console.log(this.likes + " likes");
+    console.log(this.content);
+  }
+}
+
 function videoPlay(id) {
   const secretUrl = `https://platzi.com/${id}`;
   console.log(`Playing video from ${secretUrl}`);
@@ -42,6 +57,14 @@ class Student {
     this.approvedCourses = approvedCourses;
     this.learningPaths = learningPaths;
   }
+
+  publicarComentario(commentContent) {
+    const comment = new Comment({
+      content: commentContent,
+      studentName: this.name,
+    });
+    comment.publicar();
+  }
 }
 
 class FreeStudent extends Student {
@@ -79,6 +102,24 @@ class ExpertStudent extends Student {
   }
   approveCourse(newCourse) {
     this.approvedCourses.push(newCourse);
+  }
+}
+
+class TeacherStudent extends Student {
+  constructor(props) {
+    super(props);
+  }
+  approveCourse(newCourse) {
+    this.approvedCourses.push(newCourse);
+  }
+
+  publicarComentario(commentContent) {
+    const comment = new Comment({
+      content: commentContent,
+      studentName: this.name,
+      studentRole: "profesor",
+    });
+    comment.publicar();
   }
 }
 
@@ -150,4 +191,11 @@ const miguelito = new BasicStudent({
   email: "miguelito@juanito.com",
   instagram: "miguelito_feliz",
   learningPaths: [escuelaWeb, escuelaData],
+});
+
+const freddy = new TeacherStudent({
+  name: "Freddy Vega",
+  username: "freddier",
+  email: "f@gep.com",
+  instagram: "freddiervega",
 });
