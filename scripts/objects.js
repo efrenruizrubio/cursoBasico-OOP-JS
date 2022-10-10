@@ -31,14 +31,25 @@ class LearningPath {
 
 class Course {
   constructor({ name, classes = [] }) {
-    this.name = name;
+    this._name = name;
     this.classes = classes;
+  }
+
+  get name() {
+    return this._name;
+  }
+
+  set name(newName) {
+    if (newName === "Curso Malito de Programación Básica") console.error("No");
+    else this._name = newName;
   }
 }
 
 const courseProgBasica = new Course({
   name: "Curso de Programación Básica",
 });
+
+courseProgBasica.name = "Testing";
 
 const courseDefinitivoHTML = new Course({
   name: "Curso Definitivo de HTML y CSS",
