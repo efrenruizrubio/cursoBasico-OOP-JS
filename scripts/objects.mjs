@@ -1,3 +1,25 @@
+function videoPlay(id) {
+  const secretUrl = `https://platzi.com/${id}`;
+  console.log(`Playing video from ${secretUrl}`);
+}
+function videoStop(id) {
+  const secretUrl = `https://platzi.com/${id}`;
+  console.log(`Stopping video from ${secretUrl}`);
+}
+
+export class PlatziClass {
+  constructor({ name, videoID }) {
+    this.name = name;
+    this.videoID = videoID;
+  }
+  play() {
+    videoPlay(this.videoID);
+  }
+  pause() {
+    videoStop(this.videoID);
+  }
+}
+
 class Student {
   constructor({
     name,
