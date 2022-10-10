@@ -7,7 +7,7 @@ function videoStop(id) {
   console.log(`Stopping video from ${secretUrl}`);
 }
 
-export class PlatziClass {
+class PlatziClass {
   constructor({ name, videoID }) {
     this.name = name;
     this.videoID = videoID;
@@ -44,6 +44,44 @@ class Student {
   }
 }
 
+class FreeStudent extends Student {
+  constructor(props) {
+    super(props);
+  }
+
+  approveCourse(newCourse) {
+    if (newCourse.isFree) {
+      this.approvedCourses.push(newCourse);
+    } else {
+      console.warn(
+        "Lo sentimos, " + this.name + ", solo puedes tomar cursos abiertos."
+      );
+    }
+  }
+}
+class BasicStudent extends Student {
+  constructor(props) {
+    super(props);
+  }
+  approveCourse(newCourse) {
+    if (newCourse.lang !== "english") {
+      this.approvedCourses.push(newCourse);
+    } else {
+      console.warn(
+        "Lo sentimos, " + this.name + ", no puedes tomar cursos en inglés."
+      );
+    }
+  }
+}
+class ExpertStudent extends Student {
+  constructor(props) {
+    super(props);
+  }
+  approveCourse(newCourse) {
+    this.approvedCourses.push(newCourse);
+  }
+}
+
 class LearningPath {
   constructor({ name, courses = [] }) {
     this.name = name;
@@ -52,9 +90,11 @@ class LearningPath {
 }
 
 class Course {
-  constructor({ name, classes = [] }) {
+  constructor({ name, classes = [], isFree = false, lang = "spanish" }) {
     this._name = name;
     this.classes = classes;
+    this.isFree = isFree;
+    this.lang = lang;
   }
 
   get name() {
@@ -69,9 +109,8 @@ class Course {
 
 const courseProgBasica = new Course({
   name: "Curso de Programación Básica",
+  isFree: true,
 });
-
-courseProgBasica.name = "Testing";
 
 const courseDefinitivoHTML = new Course({
   name: "Curso Definitivo de HTML y CSS",
@@ -79,6 +118,7 @@ const courseDefinitivoHTML = new Course({
 
 const coursePracticoHTML = new Course({
   name: "Curso Práctico de HTML y CSS",
+  lang: "english",
 });
 
 const escuelaWeb = new LearningPath({
@@ -96,7 +136,7 @@ const escuelaVideojuegos = new LearningPath({
   courses: [courseProgBasica, "Curso de Unity", "Curso de Unreal Engine"],
 });
 
-const juan2 = new Student({
+const juan = new FreeStudent({
   name: "JuanDC",
   username: "juandc",
   email: "juanito@juanito.com",
@@ -104,7 +144,7 @@ const juan2 = new Student({
   learningPaths: [escuelaWeb, escuelaVideojuegos],
 });
 
-const miguelito = new Student({
+const miguelito = new BasicStudent({
   name: "Miguelito",
   username: "miguelitofeliz",
   email: "miguelito@juanito.com",
